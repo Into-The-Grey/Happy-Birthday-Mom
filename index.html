@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, Queen Bee!</title>
+    <!-- Google Fonts for elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============ Base Styles with Softer, Matte Colors ============ */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: small;
+            background: linear-gradient(135deg, #967d7d, #e8e8e8);
+            color: #333;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Header & Footer (default relative on mobile) */
+        header,
+        footer {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px 20px;
+            /* Reduced padding */
+            z-index: 2;
+            border: 2px solid #a3b18a;
+        }
+
+        header {
+            border-bottom-width: 2px;
+        }
+
+        footer {
+            border-top-width: 2px;
+        }
+
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            /* Slightly smaller to reduce header height */
+            color: #5a8f7b;
+            margin: 0;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============ About Section ============ */
+        #about {
+            background: rgba(255, 255, 255, 0.6);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #a3b18a;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        #about h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2em;
+            color: #8a8a8a;
+            margin-bottom: 10px;
+        }
+
+        #about p {
+            font-size: 1.2em;
+            color: #555;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+
+        /* ============ Intro Overlay (French-Doors Effect) ============ */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #5a8f7b;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #intro-text {
+            position: absolute;
+            z-index: 10;
+            color: #f9f7f2;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3em;
+            transition: opacity 1s ease;
+        }
+
+        .intro-panel {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #333;
+            z-index: 5;
+        }
+
+        #intro-panel-left {
+            left: 0;
+        }
+
+        #intro-panel-right {
+            right: 0;
+        }
+
+        @keyframes slideLeft {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        /* ============ Photo Background Container & Frames ============ */
+        #photo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-photo {
+            position: absolute;
+            width: 200px;
+            height: auto;
+            transition: opacity 1s ease, top 1s ease, left 1s ease;
+            opacity: 1;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ============ Desktop Fixed Layout ============ */
+        @media (min-width: 768px) {
+
+            html,
+            body {
+                height: 100vh;
+                overflow: hidden;
+                /* no scrollbars on desktop */
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            /* #content sits between header and footer. */
+            #content {
+                position: absolute;
+                top: 60px;
+                /* space below header */
+                bottom: 60px;
+                /* space above footer */
+                left: 0;
+                right: 0;
+                overflow: hidden;
+                /* no scroll on desktop */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Intro Overlay with French-Doors Effect -->
+    <div id="intro-overlay">
+        <div id="intro-panels">
+            <div id="intro-panel-left" class="intro-panel"></div>
+            <div id="intro-panel-right" class="intro-panel"></div>
+        </div>
+        <div id="intro-text">
+            <h1>Happy Birthday, Queen Bee! 👑</h1>
+        </div>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Photo Background Container (Images appear behind the text) -->
+    <div id="photo-bg"></div>
+
+    <!-- Main Content -->
+    <header>
+        <h1>Happy Birthday, Queen Bee! 👑</h1>
+    </header>
+
+    <div id="content">
+        <section id="about">
+            <h2>About Our Queen Bee</h2>
+            <p>
+                Dear Mom,
+
+                Thank you for being the most amazing mother in the world. You are the reason I became the man I am
+                today.
+
+                You've always been there for me—my rock, my support, and my biggest fan. Even when I didn’t believe in
+                myself, you believed in me.
+
+                You've been my guiding light, showing me the way when I was lost, and my inspiration, motivating me to
+                be the best version of myself.
+
+                You are my hero, teaching me to be strong, brave, and kind, and my best friend, sharing in both my joys
+                and sorrows. As my confidante, you've listened to my hopes and fears.
+
+                Thank you for being my role model and for filling my life with love and laughter. You mean everything to
+                me, and I am so grateful to have you as my mother.
+
+                I love you more than words can express, and I hope you have the most amazing birthday ever. You deserve
+                all the happiness in the world, and I will do everything I can to make sure you get it.
+
+                Happy birthday, Mom! I love you to the moon and back!
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <p>Made with love by Cain</p>
+        <p>Celebrating 55 years of wisdom, love, and strength!</p>
+    </footer>
+
+    <!-- =================== JavaScript =================== -->
+    <!-- Canvas-Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // ----- Intro Animation (French-Doors Effect) -----
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('intro-panel-left').style.animation = 'slideLeft 1s forwards';
+                document.getElementById('intro-panel-right').style.animation = 'slideRight 1s forwards';
+                document.getElementById('intro-text').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('intro-overlay').style.display = 'none';
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#a3b18a', '#d0e1d4', '#f4f4f4', '#c1d6c1']
+                    });
+                }, 1000);
+            }, 2000);
+        });
+
+        // ----- Configuration to Enable/Disable Photo Background Images -----
+        const enableImages = false; // Set to false to disable images
+
+        // ----- Photo Background Functionality -----
+        const imagePool = [
+            "photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg",
+            "photo6.jpg", "photo7.jpg", "photo8.jpg", "photo9.jpg", "photo10.jpg",
+            "photo11.jpg", "photo12.jpg", "photo13.jpg", "photo14.jpg", "photo15.jpg",
+            "photo16.jpg", "photo17.jpg", "photo18.jpg", "photo19.jpg", "photo20.jpg"
+        ];
+        const frameCount = 6; // Only 6 frames displayed at once
+        const photoBg = document.getElementById('photo-bg');
+
+        let frames = [];
+        let currentImages = [];
+
+        function randomPosition() {
+            const top = Math.random() * 80 + "%";
+            const left = Math.random() * 80 + "%";
+            return { top, left };
+        }
+
+        function initFrames() {
+            const availableImages = [...imagePool];
+            for (let i = 0; i < frameCount; i++) {
+                const frame = document.createElement('img');
+                frame.className = 'bg-photo';
+                const pos = randomPosition();
+                frame.style.top = pos.top;
+                frame.style.left = pos.left;
+                const randIndex = Math.floor(Math.random() * availableImages.length);
+                const imgSrc = availableImages.splice(randIndex, 1)[0];
+                frame.src = imgSrc;
+                currentImages.push(imgSrc);
+                photoBg.appendChild(frame);
+                frames.push(frame);
+            }
+        }
+
+        function updateFrames() {
+            const available = imagePool.filter(img => !currentImages.includes(img));
+            const poolForUpdate = (available.length >= frameCount) ? available : imagePool.slice();
+            poolForUpdate.sort(() => 0.5 - Math.random());
+            const newImages = poolForUpdate.slice(0, frameCount);
+
+            frames.forEach((frame, index) => {
+                if (newImages[index] && newImages[index] !== currentImages[index]) {
+                    frame.style.opacity = 0;
+                    setTimeout(() => {
+                        frame.src = newImages[index];
+                        const pos = randomPosition();
+                        frame.style.top = pos.top;
+                        frame.style.left = pos.left;
+                        frame.style.opacity = 1;
+                    }, 1000);
+                }
+            });
+            currentImages = newImages;
+        }
+
+        if (enableImages) {
+            initFrames();
+            setInterval(updateFrames, 5000);
+        } else {
+            // Hide the photo background container if images are disabled
+            photoBg.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
